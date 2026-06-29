@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Omi AI Assistant</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Highlight.js Theme -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+          <!-- Marked.js -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <script>
+
+marked.setOptions({
+
+    breaks: true,
+
+    gfm: true
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+
+<div class="app-container">
+
+    <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+    <div class="sidebar-header">
+
+        <button id="close-sidebar-btn" onclick="closeSidebar()">
+            ✕
+        </button>
+
+        <button id="new-chat-btn">
+            ➕ New Chat
+        </button>
+
+    </div>
+
+        <div class="chat-history">
+
+            {% for chat in chats %}
+
+            <div class="chat-item-wrapper">
+
+    <div
+        class="chat-item"
+        onclick="loadChat({{ chat.id }})">
+
+        {{ chat.title }}
+
+    </div>
+
+    <button
+        class="delete-chat-btn"
+        onclick="deleteChat({{ chat.id }})">
+
+        🗑
+
+    </button>
+
+</div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- MAIN CHAT -->
+
+<div class="chat-container">
+
+    <div class="header">
+
+    <button id="menu-btn" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <h1>🤖 Omi AI</h1>
+
+    <button id="theme-btn" onclick="toggleTheme()">
+        🌙
+    </button>
+
+</div>
+
+    <div id="chat-box"></div>
+
+    <div class="input-area">
+
+        <textarea
+    id="user-input"
+    placeholder="Ask Omi anything..."
+    rows="1"
+></textarea>
+
+        <button onclick="sendMessage()">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+let currentChatId = null;
+
+async function createNewChat(){
+
+    const response = await fetch(
+        "/new_chat",
+        {
+            method: "POST"
+        }
+    );
+
+    const data = await response.json();
+
+    currentChatId = data.chat_id;
+
+    document.getElementById(
+        "chat-box"
+    ).innerHTML = "";
+
+    const history =
+        document.querySelector(".chat-history");
+
+    history.insertAdjacentHTML(
+    "afterbegin",
+    `
+    <div class="chat-item-wrapper">
+
+        <div
+            class="chat-item"
+            onclick="loadChat(${data.chat_id})">
+
+            New Chat
+
+        </div>
+
+        <button
+            class="delete-chat-btn"
+            onclick="deleteChat(${data.chat_id})">
+
+            🗑
+
+        </button>
+
+    </div>
+    `
+);
+}
+
+async function loadChat(chatId){
+
+    currentChatId = chatId;
+
+    closeSidebar();
+
+    const response = await fetch(
+        `/load_chat/${chatId}`
+    );
+
+    const messages = await response.json();
+
+    const chatBox =
+        document.getElementById("chat-box");
+
+    chatBox.innerHTML = "";
+
+    messages.forEach(msg => {
+
+        if(msg.role === "user"){
+
+            chatBox.innerHTML += `
+                <div class="user">
+
+                    <div class="user-bubble">
+                        ${msg.content}
+                    </div>
+
+                    <div class="avatar user-avatar">
+                        👨‍💻
+                    </div>
+
+                </div>
+            `;
+        }
+
+        else{
+
+    chatBox.innerHTML += `
+        <div class="bot-message">
+
+            <div class="avatar bot-avatar">
+                🤖
+            </div>
+
+            <div class="bot-bubble">
+                ${formatBotMessage(msg.content)}
+            </div>
+
+        </div>
+    `;
+}
+    });
+
+    document
+.querySelectorAll("pre code")
+.forEach((block) => {
+
+    if (!block.dataset.highlighted) {
+        hljs.highlightElement(block);
+    }
+
+});
+
+chatBox.scrollTop =
+    chatBox.scrollHeight;
+}
+
+async function deleteChat(chatId){
+
+    const confirmDelete = confirm(
+        "Delete this chat permanently?"
+    );
+
+    if(!confirmDelete){
+        return;
+    }
+
+    await fetch(
+        `/delete_chat/${chatId}`,
+        {
+            method: "POST"
+        }
+    );
+
+    location.reload();
+}
+
+async function sendMessage() {
+
+    let input = document.getElementById("user-input");
+    let message = input.value;
+
+    if(message.trim() === "") return;
+
+    let chatBox = document.getElementById("chat-box");
+
+    /* USER MESSAGE */
+
+    chatBox.innerHTML += `
+        <div class="user">
+
+            <div class="user-bubble">
+                ${message}
+            </div>
+
+            <div class="avatar user-avatar">
+                👨‍💻
+            </div>
+
+        </div>
+    `;
+
+    input.value = "";
+
+    input.style.height = "auto";
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    /* TYPING MESSAGE */
+
+    const typingId = "typing-" + Date.now();
+
+    chatBox.innerHTML += `
+        <div class="bot-message" id="${typingId}">
+
+            <div class="avatar bot-avatar">
+                🤖
+            </div>
+
+            <div class="bot-bubble">
+                <strong>Omi:</strong><br>
+                Omi is typing...
+            </div>
+
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message,
+                chat_id: currentChatId 
+            })
+        });
+
+        const data = await response.json();
+
+        const replyHtml = formatBotMessage(data.reply);
+
+        document.getElementById(typingId).outerHTML = `
+            <div class="bot-message">
+
+                <div class="avatar bot-avatar">
+                    🤖
+                </div>
+
+                <div class="bot-bubble">
+                    ${replyHtml}
+                </div>
+
+            </div>
+        `;
+
+        document
+.querySelectorAll("pre code")
+.forEach((block) => {
+
+    if (!block.dataset.highlighted) {
+        hljs.highlightElement(block);
+    }
+
+});
+
+    } catch(error) {
+
+        document.getElementById(typingId).outerHTML = `
+            <div class="bot-message">
+
+                <div class="avatar bot-avatar">
+                    🤖
+                </div>
+
+                <div class="bot-bubble">
+                    <strong>Omi:</strong><br>
+                    Sorry, something went wrong.
+                </div>
+
+            </div>
+        `;
+    }
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function toggleSidebar(){
+
+    document
+        .querySelector(".sidebar")
+        .classList.toggle("show");
+
+    document
+        .getElementById("sidebar-overlay")
+        .classList.toggle("show");
+}
+
+function closeSidebar(){
+
+    document
+        .querySelector(".sidebar")
+        .classList.remove("show");
+
+    document
+        .getElementById("sidebar-overlay")
+        .classList.remove("show");
+} 
+
+window.onload = function(){
+
+    const firstChat =
+        document.querySelector(".chat-item");
+
+    if(firstChat){
+
+        firstChat.click();
+    }
+};
+
+document
+.getElementById("new-chat-btn")
+.addEventListener(
+    "click",
+    createNewChat
+);
+
+/* FORMAT BOT MESSAGE */
+
+function formatBotMessage(content){
+
+    
+
+    // Split message into text and code blocks
+    const parts = content.split(/(```[\s\S]*?```)/g);
+
+    let html = "<strong>Omi:</strong><br>";
+
+    parts.forEach(part => {
+
+        // CODE BLOCK
+        if(part.startsWith("```")){
+
+            const match = part.match(/```(\w+)?\n([\s\S]*?)```/);
+
+            if(match){
+
+    const language = match[1] || "plaintext";
+
+    const code = match[2]
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    html += `
+        <button
+            class="copy-btn"
+            onclick="copyCode(this)">
+            📋 Copy
+        </button>
+
+        <pre><code class="language-${language}">${code}</code></pre>
+    `;
+}
+        }
+
+        // NORMAL TEXT
+else if(part.trim() !== ""){
+
+    html += marked.parse(part);
+
+}
+    });
+
+    return html;
+}
+
+/* COPY CODE */
+
+function copyCode(button){
+
+    const code =
+        button.parentElement
+              .querySelector("code")
+              .innerText;
+
+    navigator.clipboard.writeText(code);
+
+    button.innerHTML = "✅ Copied";
+
+    setTimeout(() => {
+        button.innerHTML = "📋 Copy";
+    }, 2000);
+}
+
+document
+.getElementById("user-input")
+.addEventListener("keydown", function(event){
+
+    // Enter = Send
+    if(event.key === "Enter" && !event.shiftKey){
+
+        event.preventDefault();
+
+        sendMessage();
+    }
+
+    // Shift + Enter = New Line
+});
+
+/* AUTO EXPAND TEXTAREA */
+
+const textarea = document.getElementById("user-input");
+
+textarea.addEventListener("input", function(){
+
+    this.style.height = "auto";
+
+    this.style.height = this.scrollHeight + "px";
+
+});
+
+/* DARK MODE */
+
+function toggleTheme(){
+
+    document.body.classList.toggle("dark");
+
+    const btn = document.getElementById("theme-btn");
+
+    if(document.body.classList.contains("dark")){
+        btn.innerHTML = "☀️";
+    }
+    else{
+        btn.innerHTML = "🌙";
+    }
+}
+
+</script>
+
+</body>
+</html>

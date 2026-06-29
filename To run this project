@@ -1,0 +1,8 @@
+Step 1. Create account on Groq (Only Once).
+Step 2. Create API Key and paste it [api_key=  "  HERE  "] in code (Only Once).
+
+              Regular Command To Run This Project.
+
+Step 3. Open the terminal and type python3 main.py [Enter].
+
+              This project has Flask Install.
