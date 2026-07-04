@@ -397,6 +397,15 @@ function closeSidebar(){
 
 window.onload = function(){
 
+    // Restore theme
+    const savedTheme = localStorage.getItem("theme");
+
+    if(savedTheme === "dark"){
+
+        document.body.classList.add("dark");
+        document.getElementById("theme-btn").innerHTML = "☀️";
+    }
+
     const firstChat =
         document.querySelector(".chat-item");
 
@@ -404,14 +413,7 @@ window.onload = function(){
 
         firstChat.click();
     }
-};
-
-document
-.getElementById("new-chat-btn")
-.addEventListener(
-    "click",
-    createNewChat
-);
+}; 
 
 /* FORMAT BOT MESSAGE */
 
@@ -517,10 +519,17 @@ function toggleTheme(){
     const btn = document.getElementById("theme-btn");
 
     if(document.body.classList.contains("dark")){
+
         btn.innerHTML = "☀️";
+
+        localStorage.setItem("theme", "dark");
+
     }
     else{
+
         btn.innerHTML = "🌙";
+
+        localStorage.setItem("theme", "light");
     }
 }
 
