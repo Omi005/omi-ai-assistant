@@ -12,14 +12,35 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 
 # 📸 Project Preview
 
-> Add screenshots of your chatbot here.
+## 🏠 Home Screen
 
-Example:
+<p align="center">
+  <img src="images/Home Screen.png" width="900">
+</p>
 
-- Home Screen
-- Dark Mode
-- Mobile View
-- Code Generation Example
+---
+
+## 🌙 Dark Mode
+
+<p align="center">
+  <img src="images/Dark Mode.png" width="900">
+</p>
+
+---
+
+## 💻 Code Generation
+
+<p align="center">
+  <img src="images/Code Generation.png" width="900">
+</p>
+
+---
+
+## 📱 Mobile View
+
+<p align="center">
+  <img src="images/Mobile View.png" width="350">
+</p>
 
 ---
 
