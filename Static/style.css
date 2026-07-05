@@ -444,19 +444,33 @@ button:hover{
    MOBILE RESPONSIVE
 ========================== */
 
-@media (max-width: 768px){
+@media (max-width:768px){
 
+    /* Menu Button */
     #menu-btn{
         display:block;
     }
 
+    /* Header */
+    .header{
+        padding:10px 0;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    #theme-btn{
+        font-size:22px;
+    }
+
+    /* Close Sidebar Button */
     #close-sidebar-btn{
+        display:block;
+    }
 
-    display:block;
-}
-
+    /* Sidebar */
     .sidebar{
-
         position:fixed;
         top:0;
         left:-280px;
@@ -474,18 +488,18 @@ button:hover{
     }
 
     .sidebar-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-}
-
-    .chat-container{
-        width:100%;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
     }
 
+    /* Chat Container */
+    .chat-container{
+        width:100%;
+        padding:12px;
+    }
+
+    /* Chat Bubbles */
     .user-bubble{
         max-width:85%;
     }
@@ -494,13 +508,25 @@ button:hover{
         max-width:85%;
     }
 
+    /* Input Area */
     .input-area{
-        flex-wrap:wrap;
+        display:flex;
+        flex-wrap:nowrap;
+        align-items:flex-end;
+        gap:10px;
+    }
+
+    #user-input{
+        flex:1;
+        min-width:0;
     }
 
     .input-area button{
-        width:100%;
+        width:auto;
+        flex-shrink:0;
+        padding:10px 16px;
     }
+
 }
 
 /* ==========================
