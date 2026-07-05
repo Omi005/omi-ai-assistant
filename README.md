@@ -44,7 +44,7 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 
 ---
 
-## Chat History
+## 🕒 Chat History
 
 <p align="center">
   <img src="images/Chat History.png" width="350">
