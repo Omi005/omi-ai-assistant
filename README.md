@@ -75,11 +75,11 @@ The first user message automatically becomes the chat title, making conversation
 
 Example:
 
-User message:
+User message: Hi
 
 > Explain Python Lists
 
-Sidebar title:
+Sidebar title: Hi!
 
 > Explain Python Lists
 
@@ -242,7 +242,7 @@ Omi AI Assistant/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YourUsername/omi-ai-assistant.git
+git clone https://github.com/Omi005/omi-ai-assistant 
 ```
 
 ---
@@ -250,7 +250,7 @@ git clone https://github.com/YourUsername/omi-ai-assistant.git
 ## 2. Open the Project
 
 ```bash
-cd omi-ai-assistant
+cd OpenAI Chatbot
 ```
 
 ---
