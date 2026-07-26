@@ -1,12 +1,32 @@
-
-
-
-
 # 🤖 Omi AI Assistant
+
+<p align="center">
+
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-3.x-black?logo=flask)
+![SQLite](https://img.shields.io/badge/Database-SQLite-blue)
+![Groq](https://img.shields.io/badge/AI-Groq-green)
+![Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7)
+
+</p>
 
 A modern AI chatbot built with **Python, Flask, Groq API, SQLite, HTML, CSS, and JavaScript**.
 
-Omi AI Assistant provides a clean ChatGPT-like interface where users can create multiple conversations, save chat history, switch between dark and light mode, display beautifully formatted code blocks, and receive intelligent AI responses powered by Groq's Llama 3.3 model.
+Omi AI Assistant provides a clean ChatGPT-like interface where users can create multiple conversations, save chat history, switch between dark and light mode, display beautifully formatted code blocks, and receive intelligent AI responses powered by **Llama 3.3 70B Versatile**.
+
+---
+
+# 🚀 Live Demo
+
+**Try Omi AI Assistant here**
+
+👉 https://omi-ai-assistant.onrender.com/ 
+
+---
+
+# 📂 GitHub Repository
+
+https://github.com/Omi005/omi-ai-assistant
 
 ---
 
@@ -15,7 +35,7 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 ## 🏠 Home Screen
 
 <p align="center">
-  <img src="images/Home Screen.png" width="900">
+<img src="images/Home Screen.png" width="900">
 </p>
 
 ---
@@ -23,7 +43,7 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 ## 🌙 Dark Mode
 
 <p align="center">
-  <img src="images/Dark Mode.png" width="900">
+<img src="images/Dark Mode.png" width="900">
 </p>
 
 ---
@@ -31,7 +51,7 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 ## 💻 Code Generation
 
 <p align="center">
-  <img src="images/Code Generation.png" width="900">
+<img src="images/Code Generation.png" width="900">
 </p>
 
 ---
@@ -39,7 +59,7 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 ## 📱 Mobile View
 
 <p align="center">
-  <img src="images/Mobile View.png" width="350">
+<img src="images/Mobile View.png" width="350">
 </p>
 
 ---
@@ -47,25 +67,27 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 ## 🕒 Chat History
 
 <p align="center">
-  <img src="images/Chat History.png" width="350">
+<img src="images/Chat History.png" width="350">
 </p>
+
+---
 
 # ✨ Features
 
 ## 💬 AI Chat
 
-- Chat with an AI assistant powered by the Groq API.
-- Uses the Llama 3.3 70B Versatile model.
-- Maintains conversation context within each chat.
+- AI-powered conversations using the Groq API
+- Powered by **Llama 3.3 70B Versatile**
+- Maintains conversation context within each chat
 
 ---
 
 ## 🗂 Multiple Chat Management
 
-- Create unlimited chat sessions.
-- Automatically save every conversation.
-- Load previous chats anytime.
-- Delete chats permanently.
+- Create unlimited chat sessions
+- Automatically save conversations
+- Load previous chats
+- Delete chats permanently
 
 ---
 
@@ -73,117 +95,100 @@ Omi AI Assistant provides a clean ChatGPT-like interface where users can create 
 
 The first user message automatically becomes the chat title, making conversations easy to identify.
 
-Example:
-
-User message: Hi
-
-> Explain Python Lists
-
-Sidebar title: Hi!
-
-> Explain Python Lists
-
 ---
 
 ## 💻 Beautiful Code Blocks
 
-When the AI generates code:
-
-- Syntax highlighting
-- Programming language detection
-- Copy button
-- Clean formatting
+- Syntax Highlighting
+- Language Detection
+- Copy Button
+- Clean Formatting
 
 ---
 
-## 📋 Copy Code Button
+## 📋 Copy Code
 
-Every code block includes a **Copy** button.
-
-One click copies the generated code directly to the clipboard.
+Copy any generated code with a single click.
 
 ---
 
 ## 📝 Markdown Rendering
 
-The chatbot supports Markdown formatting including:
+Supports:
 
 - Headings
-- Bold text
+- Bold
 - Italics
 - Lists
 - Tables
-- Inline code
-- Code blocks
+- Inline Code
+- Code Blocks
 
 ---
 
 ## 🌙 Dark Mode
 
-Switch instantly between:
+- Light Mode
+- Dark Mode
 
-- ☀️ Light Mode
-- 🌙 Dark Mode
+Theme preference is saved in the browser.
 
 ---
 
 ## 📱 Responsive Design
 
-Works smoothly on:
+Optimized for:
 
 - Desktop
 - Laptop
 - Tablet
-- Mobile Devices
+- Mobile
 
 Includes:
 
-- Responsive sidebar
-- Mobile navigation menu
-- Sidebar overlay
-- Auto-adjusting layout
+- Responsive Sidebar
+- Mobile Navigation
+- Sidebar Overlay
+- Adaptive Layout
 
 ---
 
 ## ⌨️ Smart Input Box
 
-The input box automatically expands as you type longer messages.
-
-Supports:
-
-- Enter → Send message
-- Shift + Enter → New line
+- Auto-expanding textarea
+- Enter → Send Message
+- Shift + Enter → New Line
 
 ---
 
 ## ⏳ Typing Indicator
 
-Shows:
+Displays:
 
+```
 Omi is typing...
+```
 
 while waiting for the AI response.
 
 ---
 
-## 💾 Persistent Chat History
+## 💾 Chat History
 
-Chat history is stored locally using SQLite.
+Chat history is stored using SQLite.
 
-Even after restarting the application, previous chats remain available.
+- When running locally, chats persist between application restarts.
+- On the Render free tier, chat history may reset after a redeploy or service restart because the filesystem is ephemeral.
 
 ---
 
-## 🎨 Modern User Interface
+## 🎨 Modern UI
 
-Features include:
-
-- Rounded chat bubbles
-- User & AI avatars
-- Smooth animations
-- Custom scrollbars
-- Clean layout
-- Professional design
+- Rounded Chat Bubbles
+- User & AI Avatars
+- Smooth Animations
+- Custom Scrollbars
+- Professional Layout
 
 ---
 
@@ -195,7 +200,7 @@ Features include:
 - Flask
 - Flask-SQLAlchemy
 - SQLite
-- python-dotenv
+- Python-dotenv
 - Groq API
 
 ---
@@ -217,13 +222,13 @@ Features include:
 
 # 📂 Project Structure
 
-```
+```text
 Omi AI Assistant/
 │
-├── Static/
+├── static/
 │   └── style.css
 │
-├── Templates/
+├── templates/
 │   └── index.html
 │
 ├── instance/
@@ -231,6 +236,8 @@ Omi AI Assistant/
 │
 ├── .env
 ├── .gitignore
+├── requirements.txt
+├── Procfile
 ├── main.py
 └── README.md
 ```
@@ -242,7 +249,7 @@ Omi AI Assistant/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Omi005/omi-ai-assistant 
+git clone https://github.com/Omi005/omi-ai-assistant.git
 ```
 
 ---
@@ -250,7 +257,7 @@ git clone https://github.com/Omi005/omi-ai-assistant
 ## 2. Open the Project
 
 ```bash
-cd OpenAI Chatbot
+cd omi-ai-assistant
 ```
 
 ---
@@ -276,25 +283,12 @@ source venv/bin/activate
 ## 4. Install Dependencies
 
 ```bash
-pip install flask
-pip install flask_sqlalchemy
-pip install python-dotenv
-pip install groq
+pip install -r requirements.txt
 ```
-
-Or install them using a requirements file if available.
 
 ---
 
-## 5. Create a .env File
-
-Create a file named:
-
-```
-.env
-```
-
-Add your Groq API key:
+## 5. Create a `.env` File
 
 ```env
 GROQ_API_KEY=your_api_key_here
@@ -318,11 +312,22 @@ python3 main.py
 
 ## 7. Open in Browser
 
-Visit:
-
 ```
 http://127.0.0.1:5000
 ```
+
+---
+
+# ☁️ Deployment
+
+This project is deployed on **Render** using:
+
+- Flask
+- Gunicorn
+- GitHub Integration
+- Environment Variables
+
+Every push to GitHub can automatically trigger a new deployment on Render.
 
 ---
 
@@ -334,19 +339,21 @@ http://127.0.0.1:5000
 4. Conversation is sent to the Groq API.
 5. AI generates a response.
 6. Response is stored in SQLite.
-7. Response is displayed with Markdown formatting and syntax highlighting.
+7. Markdown is rendered.
+8. Code blocks are syntax highlighted.
+9. The response is displayed in the chat interface.
 
 ---
 
 # 📚 Database
 
-SQLite is used for storing:
+SQLite stores:
 
-- Chat titles
-- User messages
-- AI responses
+- Chat Titles
+- User Messages
+- AI Responses
 
-Database tables:
+Tables:
 
 - Chat
 - Message
@@ -355,13 +362,11 @@ Database tables:
 
 # 🔒 Environment Variables
 
-This project uses:
+The project securely stores API keys using:
 
 ```
 .env
 ```
-
-to securely store the Groq API key.
 
 The `.env` file is excluded from Git using `.gitignore`.
 
@@ -369,14 +374,12 @@ The `.env` file is excluded from Git using `.gitignore`.
 
 # 🚧 Future Improvements
 
-Planned features include:
-
 - 🌐 Web Search
 - 🖼 Image Generation
-- 📎 File Upload Support
+- 📎 File Upload
 - 🎤 Voice Input
 - 🔊 Text-to-Speech
-- Streaming AI Responses
+- Streaming Responses
 - User Authentication
 - Chat Export
 - Better Markdown Rendering
@@ -387,23 +390,27 @@ Planned features include:
 
 **Omkar**
 
-Built as a personal AI assistant project to learn:
+Built to learn and practice:
 
-- Flask
 - Python
-- Frontend Development
+- Flask
 - AI Integration
-- API Development
-- Database Management
+- REST APIs
+- SQLAlchemy
+- Frontend Development
+- Responsive UI Design
+- Deployment with Render
 
 ---
 
 # 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
 
 ---
 
-# ⭐ If You Like This Project
+# ⭐ Support
 
-If you found this project helpful, consider giving it a ⭐ on GitHub.
+If you found this project useful, please consider giving it a ⭐ on GitHub.
+
+It helps others discover the project and motivates future improvements.
