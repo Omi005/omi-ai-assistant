@@ -10,7 +10,7 @@
 
 </p>
 
-A modern AI chatbot built with **Python, Flask, Groq API, SQLite, HTML, CSS, and JavaScript**.
+A modern AI chatbot built with **Python, Flask, Groq API, SQLite, HTML, CSS, Tavily and JavaScript**.
 
 Omi AI Assistant provides a clean ChatGPT-like interface where users can create multiple conversations, save chat history, switch between dark and light mode, display beautifully formatted code blocks, and receive intelligent AI responses powered by **Llama 3.3 70B Versatile**.
 
@@ -202,6 +202,7 @@ Chat history is stored using SQLite.
 - SQLite
 - Python-dotenv
 - Groq API
+- Tavily API
 
 ---
 
@@ -215,8 +216,20 @@ Chat history is stored using SQLite.
 
 ## Libraries
 
-- Highlight.js
-- Marked.js
+## Backend
+
+- Flask
+- Flask-SQLAlchemy
+- Groq Python SDK
+- Tavily Python SDK
+- Python-dotenv
+
+---
+
+## Frontend
+
+- Marked.js (Markdown Rendering)
+- Highlight.js (Syntax Highlighting)
 
 ---
 
@@ -254,7 +267,7 @@ git clone https://github.com/Omi005/omi-ai-assistant.git
 
 ---
 
-## 2. Open the Project
+## 2. Navigate to the Project Directory
 
 ```bash
 cd omi-ai-assistant
@@ -290,13 +303,34 @@ pip install -r requirements.txt
 
 ## 5. Create a `.env` File
 
+Create a `.env` file in the project root and add your API keys:
+
 ```env
-GROQ_API_KEY=your_api_key_here
+GROQ_API_KEY=your_groq_api_key
+TAVILY_API_KEY=your_tavily_api_key
 ```
 
 ---
 
-## 6. Run the Application
+## 6. Get Your API Keys
+
+### Groq API
+
+1. Visit https://console.groq.com/keys
+2. Sign in or create an account.
+3. Generate a new API key.
+4. Copy the key into your `.env` file.
+
+### Tavily API
+
+1. Visit https://app.tavily.com/
+2. Sign in or create an account.
+3. Generate a new API key.
+4. Copy the key into your `.env` file.
+
+---
+
+## 7. Run the Application
 
 ```bash
 python main.py
@@ -310,38 +344,79 @@ python3 main.py
 
 ---
 
-## 7. Open in Browser
+## 8. Open Your Browser
+
+Visit:
 
 ```
 http://127.0.0.1:5000
 ```
 
----
+Your Omi AI Assistant should now be running locally.
 
 # ☁️ Deployment
 
-This project is deployed on **Render** using:
+Omi AI Assistant is deployed on **Render**.
+
+The deployment uses:
 
 - Flask
 - Gunicorn
+- Render Web Service
 - GitHub Integration
 - Environment Variables
 
-Every push to GitHub can automatically trigger a new deployment on Render.
+Every push to the GitHub repository can automatically trigger a new deployment on Render.
 
 ---
 
+## Environment Variables
+
+Configure the following environment variables in your Render dashboard:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+TAVILY_API_KEY=your_tavily_api_key
+```
+
+---
+
+## Build Command
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Start Command
+
+```bash
+gunicorn main:app
+```
+
+---
+
+## Notes
+
+- SQLite is used for storing chat history.
+- On the Render Free plan, the filesystem is **ephemeral**, meaning the SQLite database may reset after a service restart or redeployment.
+- For permanent chat history in production, consider using PostgreSQL or another managed database.
+
 # ⚙️ How It Works
 
-1. User sends a message.
-2. Flask receives the request.
-3. Previous chat history is loaded from SQLite.
-4. Conversation is sent to the Groq API.
-5. AI generates a response.
-6. Response is stored in SQLite.
-7. Markdown is rendered.
-8. Code blocks are syntax highlighted.
-9. The response is displayed in the chat interface.
+1. The user enters a message in the chat interface.
+2. Flask receives the request from the frontend.
+3. The user's message is saved to the SQLite database.
+4. The previous conversation history for that chat is loaded.
+5. A lightweight AI classifier determines whether the question requires current or real-time information.
+6. If a web search is needed, the Tavily Search API retrieves relevant and up-to-date information.
+7. The search results are added to the conversation as additional context.
+8. The complete conversation is sent to Groq's **Llama 3.3 70B Versatile** model.
+9. The AI generates a response using the conversation history and, when available, the web search results.
+10. The AI response is saved to the SQLite database.
+11. Markdown is rendered, code blocks are syntax highlighted, and copy buttons are added.
+12. The formatted response is displayed in the chat interface.
 
 ---
 
@@ -374,15 +449,21 @@ The `.env` file is excluded from Git using `.gitignore`.
 
 # 🚧 Future Improvements
 
-- 🌐 Web Search
-- 🖼 Image Generation
-- 📎 File Upload
 - 🎤 Voice Input
 - 🔊 Text-to-Speech
-- Streaming Responses
-- User Authentication
-- Chat Export
-- Better Markdown Rendering
+- 🖼 AI Image Generation
+- 📎 File Upload Support
+- 📄 PDF & Document Analysis
+- 🌍 Multi-language Support
+- 💬 Streaming AI Responses
+- 👤 User Authentication
+- ☁️ Cloud Database (PostgreSQL/MySQL)
+- 📤 Chat Export (PDF/Markdown)
+- ⭐ Pin & Favorite Chats
+- 🔍 Chat Search
+- 🧠 Support for Multiple AI Models
+- ⚙️ Custom AI Settings (Temperature, Model Selection)
+- 📱 Progressive Web App (PWA) Support
 
 ---
 
@@ -390,15 +471,21 @@ The `.env` file is excluded from Git using `.gitignore`.
 
 **Omkar**
 
-Built to learn and practice:
+Omi AI Assistant was developed as a personal project to explore modern AI application development using Python and Flask.
+
+Through this project, I gained hands-on experience with:
 
 - Python
 - Flask
-- AI Integration
-- REST APIs
 - SQLAlchemy
-- Frontend Development
-- Responsive UI Design
+- SQLite
+- Groq API
+- Tavily Search API
+- REST APIs
+- HTML, CSS & JavaScript
+- Markdown Rendering
+- Responsive Web Design
+- AI Prompt Engineering
 - Deployment with Render
 
 ---
